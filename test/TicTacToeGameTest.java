@@ -1,6 +1,12 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+/**
+ * Represents a Test for my TicTacToe Game.
+ *
+ * @author Akif Aydin
+ */
+
 public class TicTacToeGameTest extends TicTacToeGame{
 
 

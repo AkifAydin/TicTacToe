@@ -1,5 +1,11 @@
 import java.util.*;
 
+/**
+ * Represents a simple TicTacToe Game.
+ *
+ * @author Akif Aydin
+ */
+
 public class TicTacToeGame {
 
     private static final int SIZE = 3;  //spielfeld größe
@@ -86,16 +92,23 @@ public class TicTacToeGame {
     }
 
     public static int eingabe() {
-        int x = 0;
+        int x;
         Scanner scn = new Scanner(System.in);
-        x = Integer.parseInt(scn.next());
+        x = scn.nextInt();
+        while (x<0 || x>2) {
+            System.out.println("Eingabe nicht im bereich des Spielfelds");
+            System.out.println("bitte 0, 1 oder 2 eingeben");
+            x = scn.nextInt();
+        }
         return x;
     }
 
     //random 0 or 1 Player start
     public static void main(String[] args) {
         //Koordinaten
-        int x, y = 0;
+        int x;
+        int y;
+
         //wer beginnt?
         Random rnd = new Random();
         int whoStarts = rnd.nextInt(2);
