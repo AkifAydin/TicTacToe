@@ -1,3 +1,2 @@
 # TicTacToe
-My TicTacToeGame
-Its a professional TicTacToe Game with Vr Features. 😂
+My TicTacToeGame, a professional TicTacToe Game with Vr Features. 😂
