@@ -183,10 +183,8 @@ public class TicTacToe_JFrame {  // implements ActionListener {
     }
 
     public void eingabe(JButton feld, String player) {
-        for (int i = 0; i < SIZE; i++) {
-            feld.setForeground(Color.BLACK);  //Farbe von X und O
-            feld.setText(player);  //Spieler
-        }
+        feld.setForeground(Color.BLACK);  //Farbe von X und O
+        feld.setText(player);  //Spieler
     }
 
 }
