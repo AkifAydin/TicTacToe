@@ -7,6 +7,7 @@ public class TicTacToe_JFrame {  // implements ActionListener {
 
     private static final int SIZE = 9;  //spielfeld größe
     private static final Map<Integer, String> spieler = new HashMap<>();  //spieler
+    private static Boolean WINNERFOUND = false;
     //private static ActionEvent click;
 
     public static void main(String[] args) {
@@ -54,12 +55,11 @@ public class TicTacToe_JFrame {  // implements ActionListener {
             buttons[i] = new JButton();
             playField.add(buttons[i]);
             buttons[i].setFont(new Font("MV Boli", Font.BOLD, 40));
-            buttons[i].setFocusable(false);
+            buttons[i].setFocusable(false);  //default is true
             //buttons[i].addActionListener(new ActionListener());
         }
 
-        title_panel.setLayout(new BorderLayout());
-        //title_panel.setBounds(0,0,800,100);
+        title_panel.setLayout(new BorderLayout()); //Titel bereich oben
         title_panel.add(textfield);   //titel inhalt
         title_panel.setBounds(0, 0, 800, 100);  //Titel Position
         frame.add(title_panel, BorderLayout.NORTH);  //ins frame rein
@@ -86,27 +86,31 @@ public class TicTacToe_JFrame {  // implements ActionListener {
             } else {
                 textfield.setText("Your Turn Player2");
             }
-            //Zug vom Spieler
-            for (int i = 0; i < SIZE; i++) {
-                if (buttons[i].getModel().isPressed() && isValidField(buttons[i])) {
-                    //Valide Feld angabe
-                    eingabe(buttons[i], spieler.get(whoStarts));
-                    //Spieler wechseln
-                    if (whoStarts == 1) {
-                        whoStarts = 0;
-                    } else whoStarts++;
-                    break;
-                }
-            }
-            //winner?
-            if (isWinner(playField, spieler.get(whoStarts))) {
+
+            if (WINNERFOUND) {
                 if (spieler.get(whoStarts).equals("x")) {
                     textfield.setText("Player1 is the Winner");
-                    break;
                 } else {
                     textfield.setText("You are the Winner Player2");
-                    break;
                 }
+                break;
+            } else {
+                for (int i = 0; i < SIZE; i++) {   //Zug vom Spieler (Klick auf beliebiges Feld erkennen)
+                if (buttons[i].getModel().isPressed() && isValidField(buttons[i])) {
+                        //Feld mit symbol des Spielers befüllen wenn Valid
+                        eingabe(buttons[i], spieler.get(whoStarts));
+                        //Spieler wechseln
+                        if (whoStarts == 1) {
+                            if (isWinner(playField, spieler.get(whoStarts))) {
+                                WINNERFOUND = true;
+                            } else whoStarts = 0;
+                        } else if (isWinner(playField, spieler.get(whoStarts))) {
+                            WINNERFOUND = true;
+                        } else whoStarts++;
+                        break;
+                    }
+                }
+
             }
         }
     }
@@ -178,7 +182,13 @@ public class TicTacToe_JFrame {  // implements ActionListener {
                 return false;  //wenn nicht alle Felder belegt sind
             }
         }
-        textfield.setText("Sadly No Winner this Time!");
+        if (isWinner(playField, spieler.get(whoStarts))) {
+            if (spieler.get(whoStarts).equals("x")) {
+                textfield.setText("Player1 is the Winner");
+            } else {
+                textfield.setText("You are the Winner Player2");
+            }
+        }else  textfield.setText("Sadly No Winner this Time!");
         return true; //wenn alle Felder belegt sind
     }
 

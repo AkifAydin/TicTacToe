@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class FrameLabel {
-
+//Test class for Learning
 
     public static void main(String[] args) {
 
