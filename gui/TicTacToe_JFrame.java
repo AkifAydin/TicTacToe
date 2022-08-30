@@ -22,8 +22,8 @@ public class TicTacToe_JFrame {  // implements ActionListener {
     JLabel textfield = new JLabel();
     Border brd = BorderFactory.createLineBorder(Color.ORANGE, 5);
     JButton[] buttons = new JButton[9];  //Spielfeld Clickable fields
-    ImageIcon ply1 = new ImageIcon("C:\\Users\\akifn\\OneDrive - haw-hamburg.de\\Dokumente\\Bilder\\icons\\icons8-student-64.png");
-    ImageIcon image = new ImageIcon("C:\\Users\\akifn\\OneDrive - haw-hamburg.de\\Dokumente\\Bilder\\Emotes\\Sleep.png");
+    ImageIcon ply1 = new ImageIcon("gui/icon/icons8-student-64.png");
+    ImageIcon image = new ImageIcon("gui/icon/Sleep.png");
 
 
     TicTacToe_JFrame() {
