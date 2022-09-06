@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 public class TicTacToe_JFrame {  // implements ActionListener {
@@ -8,7 +10,10 @@ public class TicTacToe_JFrame {  // implements ActionListener {
     private static final int SIZE = 9;  //spielfeld größe
     private static final Map<Integer, String> spieler = new HashMap<>();  //spieler
     private static Boolean WINNERFOUND = false;
-    //private static ActionEvent click;
+//    public static JButton single = new JButton("SinglePlayer");
+    public static JButton multi = new JButton("Play");
+    public static StartFrame startFrame = new StartFrame();
+    public static JPanel playField = new JPanel();
 
     public static void main(String[] args) {
         TicTacToe_JFrame ttt = new TicTacToe_JFrame();
@@ -17,59 +22,57 @@ public class TicTacToe_JFrame {  // implements ActionListener {
     //wer beginnt?
     Random rnd = new Random();
     int whoStarts = rnd.nextInt(2);  //zum Entscheiden, wer am Zug ist (random)
-    JFrame frame = new JFrame();
-    JPanel title_panel = new JPanel();
-    JPanel playField = new JPanel();
-    JLabel textfield = new JLabel();
     Border brd = BorderFactory.createLineBorder(Color.ORANGE, 5);
     JButton[] buttons = new JButton[9];  //Spielfeld Clickable fields
-    ImageIcon ply1 = new ImageIcon("gui/icon/icons8-student-64.png");
-    ImageIcon image = new ImageIcon("gui/icon/Sleep.png");
-
 
     TicTacToe_JFrame() {
+//        single.setBounds(150,250,200,50);
+//        single.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                startFrame.frame.getContentPane().remove(single);
+//                startFrame.frame.getContentPane().remove(multi);
+//                startFrame.frame.repaint();
+//            }
+//        });
+//        single.setFont(new Font("MV Boli", Font.BOLD, 20));
+//        single.setFocusable(false);
+//        startFrame.frame.add(single);
 
-        frame.setTitle("Tic-Tac-Toe  Akif Aydin");
-        frame.setIconImage(image.getImage());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
-        frame.getContentPane().setBackground(Color.GRAY);
-        frame.setLayout(null);
-        frame.setVisible(true);
-        frame.setResizable(false);
+        multi.setBounds(300,200,200,50);
+        multi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                startFrame.frame.getContentPane().remove(single);
+                startFrame.frame.getContentPane().remove(multi);
+                startFrame.frame.repaint();
+                playField.setVisible(true);
+                startFrame.textChange();
+            }
+        });
+        multi.setFont(new Font("MV Boli", Font.BOLD, 20));
+        multi.setFocusable(false);
+        startFrame.frame.add(multi);
+        playField.setVisible(false);
+        startGame();
+    }
 
-        textfield.setBackground(Color.black);
-        textfield.setForeground(Color.orange); //green also nice
-        textfield.setFont(new Font("MV Boli", Font.PLAIN, 50));   //set font of text //aussehen
-        textfield.setIcon(ply1);
-        textfield.setHorizontalAlignment(SwingConstants.CENTER);
-        textfield.setText("Tic-Tac-Toe");
-        textfield.setOpaque(true);
 
+
+    public void startGame() {
         playField.setLayout(new GridLayout(3, 3));
         playField.setBounds(200, 200, 400, 400);
         playField.setBorder(brd);
-
 
         for (int i = 0; i < buttons.length; i++) {  //alle buttons in den Spielfeld ADDEN
             buttons[i] = new JButton();
             playField.add(buttons[i]);
             buttons[i].setFont(new Font("MV Boli", Font.BOLD, 40));
             buttons[i].setFocusable(false);  //default is true
-            //buttons[i].addActionListener(new ActionListener());
         }
-
-        title_panel.setLayout(new BorderLayout()); //Titel bereich oben
-        title_panel.add(textfield);   //titel inhalt
-        title_panel.setBounds(0, 0, 800, 100);  //Titel Position
-        frame.add(title_panel, BorderLayout.NORTH);  //ins frame rein
-        frame.add(playField);
-
-        startGame();
-    }
+        startFrame.frame.add(playField);
 
 
-    public void startGame() {
 
         //init StartPlayfield
         startPlayground(buttons);
@@ -82,16 +85,16 @@ public class TicTacToe_JFrame {  // implements ActionListener {
         while (!allFieldsUsed(buttons)) {
             //Spieler am Zug
             if (spieler.get(whoStarts).equals("x")) {
-                textfield.setText("Your Turn Player1");
+                startFrame.textfield.setText("Your Turn Player1");
             } else {
-                textfield.setText("Your Turn Player2");
+                startFrame.textfield.setText("Your Turn Player2");
             }
 
             if (WINNERFOUND) {
                 if (spieler.get(whoStarts).equals("x")) {
-                    textfield.setText("Player1 is the Winner");
+                    startFrame.textfield.setText("Player1 is the Winner");
                 } else {
-                    textfield.setText("You are the Winner Player2");
+                    startFrame.textfield.setText("You are the Winner Player2");
                 }
                 break;
             } else {
@@ -184,11 +187,11 @@ public class TicTacToe_JFrame {  // implements ActionListener {
         }
         if (isWinner(playField, spieler.get(whoStarts))) {
             if (spieler.get(whoStarts).equals("x")) {
-                textfield.setText("Player1 is the Winner");
+                startFrame.textfield.setText("Player1 is the Winner");
             } else {
-                textfield.setText("You are the Winner Player2");
+                startFrame.textfield.setText("You are the Winner Player2");
             }
-        }else  textfield.setText("Sadly No Winner this Time!");
+        }else  startFrame.textfield.setText("Sadly No Winner this Time!");
         return true; //wenn alle Felder belegt sind
     }
 
